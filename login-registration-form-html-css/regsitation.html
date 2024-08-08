@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Form Example</title>
+  
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .form-container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #004085;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="container">
+    <div class="form-container">
+        <form id="userForm">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="middleName">Middle Name</label>
+                <input type="text" class="form-control" id="middleName" placeholder="Middle Name">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="lastName">Last Name</label>
+                <input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="Email" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="mobileNo">Mobile No</label>
+                <input type="text" class="form-control" id="mobileNo" placeholder="Mobile No" required pattern="\d{10}">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="country">Country</label>
+                <select id="country" class="form-control" onchange="populateStates()" required>
+                  <option value="">Choose...</option>
+                  <option value="USA">USA</option>
+                  <option value="Canada">Canada</option>
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="state">State</label>
+                <select id="state" class="form-control" onchange="populateCities()" required>
+                  <option value="">Choose...</option>
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="city">City</label>
+                <select id="city" class="form-control" required>
+                  <option value="">Choose...</option>
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="zip">Zip</label>
+                <input type="text" class="form-control" id="zip" placeholder="Zip" required pattern="\d{5}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" placeholder="Password" required>
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword">Confirm Password</label>
+              <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Sign in</button>
+          </form>
+          
+    </div>
+  </div>
+  
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  <script>
+    const states = {
+      USA: ["California", "Florida", "New York"],
+      Canada: ["Ontario", "Quebec", "British Columbia"]
+    };
+
+    const cities = {
+      California: ["Los Angeles", "San Francisco"],
+      Florida: ["Miami", "Orlando"],
+      NewYork: ["New York City", "Buffalo"],
+      Ontario: ["Toronto", "Ottawa"],
+      Quebec: ["Montreal", "Quebec City"],
+      BritishColumbia: ["Vancouver", "Victoria"]
+    };
+
+    function populateStates() {
+      const countrySelect = document.getElementById("country");
+      const stateSelect = document.getElementById("state");
+      const citySelect = document.getElementById("city");
+
+      const selectedCountry = countrySelect.value;
+      
+      stateSelect.innerHTML = '<option value="">Choose...</option>';
+      citySelect.innerHTML = '<option value="">Choose...</option>';
+
+      if (selectedCountry) {
+        states[selectedCountry].forEach(state => {
+          const option = document.createElement("option");
+          option.value = state;
+          option.text = state;
+          stateSelect.add(option);
+        });
+      }
+    }
+
+    function populateCities() {
+      const stateSelect = document.getElementById("state");
+      const citySelect = document.getElementById("city");
+
+      const selectedState = stateSelect.value;
+      
+      citySelect.innerHTML = '<option value="">Choose...</option>';
+
+      if (selectedState) {
+        const stateKey = selectedState.replace(/\s+/g, ''); // Replace spaces for object key
+        cities[stateKey].forEach(city => {
+          const option = document.createElement("option");
+          option.value = city;
+          option.text = city;
+          citySelect.add(option);
+        });
+      }
+    }
+
+    document.querySelector('#userForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    // Gather values from form
+    const firstName = document.getElementById('firstName').value.trim();
+    const middleName = document.getElementById('middleName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const mobileNo = document.getElementById('mobileNo').value.trim();
+    const country = document.getElementById('country').value.trim();
+    const state = document.getElementById('state').value.trim();
+    const city = document.getElementById('city').value.trim();
+    const zip = document.getElementById('zip').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const confirmPassword = document.getElementById('confirmPassword').value.trim();
+
+    // Basic validation
+    if (!firstName || !lastName || !email || !mobileNo || !country || !state || !city || !zip || !password || !confirmPassword) {
+        alert('Please fill out all required fields.');
+        return;
+    }
+
+    // Password matching validation
+    if (password !== confirmPassword) {
+        alert('Passwords do not match.');
+        return;
+    }
+
+    // Mobile number validation (must be exactly 10 digits)
+    if (!/^\d{10}$/.test(mobileNo)) {
+        alert('Mobile number must be 10 digits.');
+        return;
+    }
+
+    // Zip code validation (must be exactly 5 digits)
+    if (!/^\d{5}$/.test(zip)) {
+        alert('Zip code must be 5 digits.');
+        return;
+    }
+
+    const formData = {
+        firstName,
+        middleName,
+        lastName,
+        email,
+        mobileNo,
+        country,
+        state,
+        city,
+        zip,
+        password,
+        confirmPassword
+    };
+
+    fetch('https://localhost:7160/api/UserForm', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        alert('Form submitted successfully');
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error submitting form');
+    });
+});
+
+  </script>
+
+</body>
+</html>
